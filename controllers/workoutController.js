@@ -32,6 +32,7 @@ const createWorkout = async (req, res) => {
 		res.status(200).json(workout)
 	} catch (error) {
 		console.log(error)
+		console.log("THis is the error")
 		return res.status(400).json({ error: error.message })
 	}
 }
