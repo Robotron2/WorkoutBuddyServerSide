@@ -19,6 +19,7 @@ mongoose
 	})
 
 const workoutRoutes = require("./Routes/workouts")
+const userRoutes = require("./Routes/users")
 
 //middleware
 app.use(cors())
@@ -31,3 +32,4 @@ app.use((req, res, next) => {
 
 //Routes
 app.use("/api/workouts", workoutRoutes)
+app.use("/api/user", userRoutes)
