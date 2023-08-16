@@ -1,6 +1,6 @@
 const User = require("../models/userModel")
 const bcrypt = require("bcrypt")
-
+const validator = require("validator")
 //login user
 const loginUser = async (req, res) => {
 	//
@@ -9,14 +9,24 @@ const loginUser = async (req, res) => {
 
 //signup user
 const signupUser = async (req, res) => {
-	//
 	const { email, password } = req.body
-	const exists = await User.findOne({ email })
-
-	if (exists) {
-		throw Error("Email exists")
-	}
 	try {
+		//validation
+		if (!email || !password) {
+			throw Error("All fields must be filled!")
+		}
+		if (!validator.isEmail(email)) {
+			throw Error("Email is not valid")
+		}
+		if (!validator.isStrongPassword(password)) {
+			throw Error("Password is not strong enough")
+		}
+
+		const exists = await User.findOne({ email })
+
+		if (exists) {
+			throw Error("Email exists")
+		}
 		const saltRound = 10
 
 		const salt = await bcrypt.genSalt(saltRound)
